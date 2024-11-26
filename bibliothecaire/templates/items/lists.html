@@ -1,0 +1,29 @@
+<html>
+    <h1>Liste des livres</h1>
+    <ul>
+        {% for livre in livres %}
+        <li> Titre :{{ livre.name }}; Auteur : {{ livre.auteur }}; Disponibilité : ; Emprunteur: {{ livre.emprunteur }}; Date d'emprunt: {{ livre.dateEmprunt }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des DVD</h1>
+    <ul>
+        {% for dvd in dvds %}
+        <li> Titre :{{ dvd.name }}; Realisateur : {{ dvd.realisateur }}; Disponibilité : ; Emprunteur: {{ dvd.emprunteur }}; Date d'emprunt: {{ dvd.dateEmprunt }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des CD</h1>
+    <ul>
+        {% for cd in cds %}
+        <li> Titre :{{ cd.name }}; Artiste : {{ cd.artiste }}; Disponibilité : ; Emprunteur: {{ cd.emprunteur }}; Date d'emprunt: {{ cd.dateEmprunt }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des jeux de plateau</h1>
+    <ul>
+        {% for jeu in jeux %}
+        <li> Nom :{{ cd.name }}; Createur: {{ jeu.createur }}</li>
+        {% endfor %}
+    </ul>
+</html>
