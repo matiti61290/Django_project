@@ -1,15 +1,15 @@
 from django import forms
 
 class CreationLivre(forms.Form):
-    name = forms.CharField(required=True)
+    nameLivre = forms.CharField(required=True)
     auteur = forms.CharField(required=True)
 
 class CreationDvd(forms.Form):
-    name = forms.CharField(required=True)
+    nameDVD = forms.CharField(required=True)
     realisateur = forms.CharField(required=True)
 
 class CreationCd(forms.Form):
-    name = forms.CharField(required=True)
+    nameCD = forms.CharField(required=True)
     artiste = forms.CharField(required=True)
 
 class CreationJeuDePlateau(forms.Form):

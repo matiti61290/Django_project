@@ -4,5 +4,5 @@ from bibliothecaire import views
 urlpatterns = [
     path('listes/', views.listelivres),
     path('emprunteurs/', views.listeemprunteur),
-    path('ajoutmedia/', views.ajoutlivre)
+    path('ajoutmedia/', views.ajoutmedia)
 ]

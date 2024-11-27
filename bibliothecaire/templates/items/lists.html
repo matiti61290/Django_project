@@ -2,7 +2,7 @@
     <h1>Liste des livres</h1>
     <ul>
         {% for livre in livres %}
-        <li> Titre :{{ livre.name }}; Auteur : {{ livre.auteur }}; Disponibilité : ; Emprunteur: {{ livre.emprunteur }}; Date d'emprunt: {{ livre.dateEmprunt }}</li>
+            <li> Titre :{{ livre.name }}; Auteur : {{ livre.auteur }}; Disponibilité : Oui ; Emprunteur: {{ livre.emprunteur }}; Date d'emprunt: {{ livre.dateEmprunt }}</li>
         {% endfor %}
     </ul>
 
