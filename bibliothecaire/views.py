@@ -3,28 +3,38 @@ from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
 from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau
 
 #Liste des items
-def listelivres(request):
+# def listelivres(request):
+#     livres = Livre.objects.all()
+#     return render(request, 'items/lists.html',
+#                   {'livres': livres})
+
+# def listedvd(request):
+#     dvds = Dvd.objects.all()
+#     return render(request, 'items/lists.html',
+#                   {'dvds': dvds})
+
+# def listecd(request):
+#     cds = Cd.objects.all()
+#     return render(request, 'items/lists.html',
+#                   {'cds': cds})
+
+# def listjeuplateau(request):
+#     jeux = JeuDePlateau.objects.all()
+#     return render(request, 'items/lists.html',
+#                   {'jeux' : jeux})
+
+
+def listemedia(request):
     livres = Livre.objects.all()
-    return render(request, 'items/lists.html',
-                  {'livres': livres})
-
-def listedvd(request):
     dvds = Dvd.objects.all()
-    return render(request, 'items/lists.html',
-                  {'dvds': dvds})
-
-def listecd(request):
     cds = Cd.objects.all()
-    return render(request, 'items/lists.html',
-                  {'cds': cds})
-
-def listjeuplateau(request):
     jeux = JeuDePlateau.objects.all()
     return render(request, 'items/lists.html',
-                  {'jeux' : jeux})
+                  {'livres': livres, 'dvds': dvds, 'cds': cds, 'jeux': jeux})
+
+
 
 # Ajout media
-
 def ajoutmedia(request):
     formLivre = CreationLivre()
     formDVD = CreationDvd()
@@ -80,40 +90,6 @@ def ajoutmedia(request):
                               {'jeuDePlateaux': jeuDePlateaux})
             
     return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
-
-# def ajoutlivre(request):
-#     if request.method == "POST":
-#         creationlivre = CreationLivre(request.POST)
-#         if creationlivre.is_valid():
-#             livre = Livre()
-#             livre.name = creationlivre.cleaned_data['name']
-#             livre.auteur = creationlivre.cleaned_data['auteur']
-#             livre.disponible = True
-#             livre.save()
-#             livres = Livre.objects.all()
-#             return render(request, 'items/lists.html',
-#                           {'livres': livres})
-#     else:
-#         creationlivre = CreationLivre()
-#         return render(request, 'items/ajout_media.html',
-#                         {'creationLivre':creationlivre})
-    
-# def ajoutdvd(request):
-#     if request.method == "POST":
-#         creationdvd = CreationDvd(request.POST)
-#         if creationdvd.is_valid():
-#             dvd = Dvd()
-#             dvd.name = creationdvd.cleaned_data['name']
-#             dvd.realisateur = creationdvd.cleaned_data['realisateur']
-#             dvd.disponible = True
-#             dvd.save()
-#             dvds = Dvd.objects.all()
-#             return render(request, 'items/lists.html',
-#                           {'dvds': dvds})
-#     else:
-#         creationdvd = CreationDvd()
-#         return render(request, 'items/ajout_media.html',
-#                         {'creationDvd':creationdvd})
 
 # liste des membres
 def listeemprunteur(request):
