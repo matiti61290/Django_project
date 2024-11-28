@@ -3,7 +3,12 @@
     <ul>
         <ul>
             {% for emprunteur in emprunteurs %}
-            <li>Nom: {{ emprunteur.name }} Nombre d'emprunt: {{ emprunteur.NombreEmprunt }}</li>
+            <li>Nom: {{ emprunteur.name }} Nombre d'emprunt: {{ emprunteur.NombreEmprunt }}
+                <form action="{% url 'supprimer_membre' emprunteur.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="color: red;">Supprimer</button>
+                </form>
+            </li>
             {% endfor %}
         </ul>
     </ul>

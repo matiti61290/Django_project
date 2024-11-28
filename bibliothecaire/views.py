@@ -1,28 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
-from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau
-
-#Liste des items
-# def listelivres(request):
-#     livres = Livre.objects.all()
-#     return render(request, 'items/lists.html',
-#                   {'livres': livres})
-
-# def listedvd(request):
-#     dvds = Dvd.objects.all()
-#     return render(request, 'items/lists.html',
-#                   {'dvds': dvds})
-
-# def listecd(request):
-#     cds = Cd.objects.all()
-#     return render(request, 'items/lists.html',
-#                   {'cds': cds})
-
-# def listjeuplateau(request):
-#     jeux = JeuDePlateau.objects.all()
-#     return render(request, 'items/lists.html',
-#                   {'jeux' : jeux})
-
+from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre
 
 def listemedia(request):
     livres = Livre.objects.all()
@@ -93,6 +71,28 @@ def ajoutmedia(request):
 
 # liste des membres
 def listeemprunteur(request):
+    emprunteurs = Emprunteur.objects.all()
+    return render(request, 'emprunteurs/list.html',
+                  {'emprunteurs': emprunteurs})
+
+# Ajout membre
+def ajoutmembre(request):
+    formMembre = CreationMembre(request.POST)
+    if request.method == "POST":
+        if formMembre.is_valid():
+            emprunteur = Emprunteur()
+            emprunteur.name = formMembre.cleaned_data['name']
+            emprunteur.NombreEmprunt = 0
+            emprunteur.save()
+            emprunteurs = Emprunteur.objects.all()
+            return render(request, 'emprunteurs/list.html',
+                          {'emprunteurs':emprunteurs})
+    return render(request, "emprunteurs/ajout_emprunteur.html", {'formMembre': formMembre})
+
+# Suppression membre
+def supprimer_membre(request, id):
+    emprunteur = Emprunteur.objects.get(pk=id)
+    emprunteur.delete()
     emprunteurs = Emprunteur.objects.all()
     return render(request, 'emprunteurs/list.html',
                   {'emprunteurs': emprunteurs})

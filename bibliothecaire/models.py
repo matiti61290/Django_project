@@ -21,4 +21,4 @@ class JeuDePlateau(models.Model):
 
 class Emprunteur(models.Model):
     name = models.fields.CharField(max_length=150)
-    NombreEmprunt = models.fields.FloatField()
+    NombreEmprunt = models.fields.IntegerField()

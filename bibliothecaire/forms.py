@@ -15,3 +15,7 @@ class CreationCd(forms.Form):
 class CreationJeuDePlateau(forms.Form):
     name = forms.CharField(required=True)
     createur = forms.CharField(required=True)
+
+class CreationMembre(forms.Form):
+    name = forms.CharField(required=True)
+    # prenom = forms.CharField(required=True)
