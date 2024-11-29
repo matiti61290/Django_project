@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
 from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre
 
@@ -87,6 +87,16 @@ def empruntLivre(request, livre_id):
         empruntLivre = EmpruntLivre()
         return render(request, 'items/emprunt.html',
                       {'empruntlivre': empruntLivre})
+
+def retourLivre(request, livre_id):
+    livre = Livre.objects.get(id=livre_id)
+    if livre.emprunteur:
+        livre.disponible = True
+        livre.emprunteur = None
+        livre.save()
+    livres = Livre.objects.all()
+    return render(request, 'items/lists.html',
+                  {'livres': livres})
 
 # liste des membres
 def listeemprunteur(request):

@@ -12,7 +12,7 @@
                 {% if livre.disponible %}
                     <a href="{% url 'emprunt_livre' livre.id %}" >Emprunter</a>
                 {% else %}
-                    Non disponible
+                    <a href="{% url 'retour_livre' livre.id %}">Retourner le livre</a>
                 {% endif %}
             </li>
         {% endfor %}
