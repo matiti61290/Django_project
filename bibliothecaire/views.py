@@ -71,13 +71,14 @@ def ajoutmedia(request):
 
 #Emprunt
 
-def empruntLivre(request, id):
-    livre = Livre.objects.get(pk=id)
+def empruntLivre(request, livre_id):
     if request.method == 'POST':
+        livre = Livre.objects.get(id=livre_id)
+        emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
         emprunt_livre = EmpruntLivre(request.POST)
         if emprunt_livre.is_valid():
             livre.disponible = False
-            livre.emprunteur = emprunt_livre.cleaned_data['emprunteur']
+            livre.emprunteur = emprunteur
             livre.save()
         livres = Livre.objects.all()
         return render(request, 'items/lists.html',
