@@ -2,7 +2,19 @@
     <h1>Liste des livres</h1>
     <ul>
         {% for livre in livres %}
-            <li> Titre :{{ livre.name }}; Auteur : {{ livre.auteur }}; Disponibilité : Oui ; Emprunteur: {{ livre.emprunteur }}; Date d'emprunt: {{ livre.dateEmprunt }}</li>
+            <li> <p>Titre :{{ livre.name }}; </p>
+                <p>Auteur : {{ livre.auteur }};</p>
+                {% if livre.disponible %}
+                    Disponible
+                {% endif %}
+                <p>Emprunteur: {{ livre.emprunteur }};</p>
+                <p>Date d'emprunt: {{ livre.dateEmprunt }}</p>
+                {% if livre.disponible %}
+                    <a href="{% url 'emprunt_livre' livre.id %}" >Emprunter</a>
+                {% else %}
+                    Non disponible
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 

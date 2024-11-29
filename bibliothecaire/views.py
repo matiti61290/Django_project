@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
-from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre
+from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre
 
 def listemedia(request):
     livres = Livre.objects.all()
@@ -68,6 +68,24 @@ def ajoutmedia(request):
                               {'jeuDePlateaux': jeuDePlateaux})
             
     return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
+
+#Emprunt
+
+def empruntLivre(request, id):
+    livre = Livre.objects.get(pk=id)
+    if request.method == 'POST':
+        emprunt_livre = EmpruntLivre(request.POST)
+        if emprunt_livre.is_valid():
+            livre.disponible = False
+            livre.emprunteur = emprunt_livre.cleaned_data['emprunteur']
+            livre.save()
+        livres = Livre.objects.all()
+        return render(request, 'items/lists.html',
+                      {'livres': livres})
+    else:
+        empruntLivre = EmpruntLivre()
+        return render(request, 'items/emprunt.html',
+                      {'empruntlivre': empruntLivre})
 
 # liste des membres
 def listeemprunteur(request):
