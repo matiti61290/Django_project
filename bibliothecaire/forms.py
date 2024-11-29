@@ -1,4 +1,5 @@
 from django import forms
+from bibliothecaire.models import Emprunteur
 
 class CreationLivre(forms.Form):
     nameLivre = forms.CharField(required=True)
@@ -18,4 +19,10 @@ class CreationJeuDePlateau(forms.Form):
 
 class CreationMembre(forms.Form):
     name = forms.CharField(required=True)
-    # prenom = forms.CharField(required=True)
+
+class EmpruntLivre(forms.Form):
+    disponible = forms.BooleanField(required=True)
+    emprunteur = forms.ModelChoiceField(
+        queryset=Emprunteur.objects.all(),
+        label="Sélectionnez un membre"
+    )

@@ -5,6 +5,7 @@ urlpatterns = [
     path('listes/', views.listemedia),
     path('emprunteurs/', views.listeemprunteur, name='listeEmprunteurs'),
     path('ajoutmedia/', views.ajoutmedia),
-    path('ajoutmembre', views.ajoutmembre),
-    path('supprimer_membre/<int:id>/', views.supprimer_membre, name='supprimer_membre')
+    path('ajoutmembre/', views.ajoutmembre),
+    path('supprimer_membre/<int:id>/', views.supprimer_membre, name='supprimer_membre'),
+    path('listes/emprunt/<int:id>/', views.empruntLivre, name='emprunt_livre')
 ]
