@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
 from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre
+from django.utils import timezone
 
 def listemedia(request):
     livres = Livre.objects.all()
@@ -79,6 +80,7 @@ def empruntLivre(request, livre_id):
         if emprunt_livre.is_valid():
             livre.disponible = False
             livre.emprunteur = emprunteur
+            livre.dateEmprunt = timezone.now()
             livre.save()
         livres = Livre.objects.all()
         return render(request, 'items/lists.html',

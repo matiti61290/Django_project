@@ -9,7 +9,7 @@ class Emprunteur(models.Model):
 
 class Items(models.Model):
     name = models.fields.CharField(max_length=150)
-    dateEmprunt = models.fields.DateField(auto_now_add=True, blank=True, null=True)
+    dateEmprunt = models.fields.DateTimeField(null=True, blank=True)
     disponible = models.fields.BooleanField(blank=True, null=True)
     emprunteur = models.ForeignKey(Emprunteur, null=True, blank=True, on_delete=models.SET_NULL)
 

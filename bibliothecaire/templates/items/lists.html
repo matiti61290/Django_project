@@ -8,7 +8,7 @@
                     Disponible
                 {% endif %}
                 <p>Emprunteur: {{ livre.emprunteur }};</p>
-                <p>Date d'emprunt: {{ livre.dateEmprunt }}</p>
+                <p>Date d'emprunt: {{ livre.dateEmprunt|date:"d/m/Y" }}</p>
                 {% if livre.disponible %}
                     <a href="{% url 'emprunt_livre' livre.id %}" >Emprunter</a>
                 {% else %}
