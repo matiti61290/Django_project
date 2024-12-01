@@ -86,7 +86,7 @@ def empruntLivre(request, livre_id):
             if emprunt_livre.is_valid():
                 livre.disponible = False
                 livre.emprunteur = emprunteur
-                livre.dateEmprunt = datetime.datetime(2000, 5, 1)
+                livre.dateEmprunt = timezone.now()
                 livre.save()
                 emprunteur.NombreEmprunt += 1
                 emprunteur.save()
@@ -172,6 +172,7 @@ def empruntCd(request, cd_id):
             cd.dateEmprunt = timezone.now()
             cd.save()
             emprunteur.NombreEmprunt += 1
+            emprunteur.save()
         return redirect('listes_media')
     else:
         empruntCd = EmpruntCd()
