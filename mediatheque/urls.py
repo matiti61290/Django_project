@@ -21,6 +21,7 @@ from mediatheque import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
+    path('connexion/', views.LoginView.as_view(), name="login"),
     path('bibliothecaire/', include('bibliothecaire.urls')),
     path('membre/', include('membre.urls'))
 ]
