@@ -7,6 +7,8 @@
                 <p>Auteur : {{ livre.auteur }};</p>
                 {% if livre.disponible %}
                     Disponible
+                {% else %}
+                    Non disponible
                 {% endif %}
                 <p>Emprunteur: {{ livre.emprunteur }};</p>
                 <p>Date d'emprunt: {{ livre.dateEmprunt|date:"d/m/Y" }}</p>
@@ -27,6 +29,8 @@
             <p>Auteur : {{ dvd.realisateur }};</p>
             {% if dvd.disponible %}
                 Disponible
+            {% else %}
+                Non disponible
             {% endif %}
             <p>Emprunteur: {{ dvd.emprunteur }};</p>
             <p>Date d'emprunt: {{ dvd.dateEmprunt|date:"d/m/Y" }}</p>
@@ -47,6 +51,8 @@
             <p>Auteur : {{ cd.artiste }};</p>
             {% if cd.disponible %}
                 Disponible
+            {% else %}
+                Non disponible
             {% endif %}
             <p>Emprunteur: {{ cd.emprunteur }};</p>
             <p>Date d'emprunt: {{ cd.dateEmprunt|date:"d/m/Y" }}</p>
@@ -56,6 +62,16 @@
                 <a href="{% url 'retour_cd' cd.id %}">Retourner le livre</a>
             {% endif %}
         </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des jeux de plateau</h1>
+    <ul>
+        {% for jeu in jeux %}
+            <li>
+                <p>Titre : {{ jeu.name }}</p>
+                <p>Createur : {{ jeu.createur }}</p>
+            </li>
         {% endfor %}
     </ul>
 </html>
