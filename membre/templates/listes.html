@@ -1,0 +1,54 @@
+<html>
+    <h1>Liste des livres</h1>
+    <ul>
+        {% for livre in livres %}
+            <li>
+                <p>Titre : {{ livre.name }}</p>
+                <p>Auteur : {{ livre.auteur }}</p>
+                {% if livre.disponible %}
+                    <p>Disponible</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des DVD</h1>
+    <ul>
+        {% for dvd in dvds %}
+            <li>
+                <p>Titre : {{ dvd.name }}</p>
+                <p>Realisateur : {{ dvd.realisateur }}</p>
+                {% if dvd.disponible %}
+                    <p>Disponible</p>
+                {% else %}
+                    Non disponible
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des CD</h1>
+    <ul>
+        {% for cd in cds %}
+            <li>
+                <p>Titre : {{ cd.name }}</p>
+                <p>Artiste : {{ cd.artiste }}</p>
+                {% if cd.disponible %}
+                    <p>Disponible</p>
+                {% else %}
+                    Non disponible
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Liste des jeux de plateau</h1>
+    <ul>
+        {% for jeudeplateau in jeuxdeplateau %}
+            <li>
+                <p>Titre : {{ jeudeplateau.name }}</p>
+                <p>Createur : {{ jeudeplateau.createur }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</html>
