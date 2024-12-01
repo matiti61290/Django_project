@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
 from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre, EmpruntDvd, EmpruntCd
 from django.utils import timezone
+from django.utils.timezone import now
+from datetime import timedelta
+import datetime
 
 def listemedia(request):
     livres = Livre.objects.all()
@@ -69,11 +72,24 @@ def empruntLivre(request, livre_id):
         livre = Livre.objects.get(id=livre_id)
         emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
         emprunt_livre = EmpruntLivre(request.POST)
-        if emprunt_livre.is_valid():
-            livre.disponible = False
-            livre.emprunteur = emprunteur
-            livre.dateEmprunt = timezone.now()
-            livre.save()
+
+        #Verification dates 
+        emprunt_en_cours = Livre.objects.filter(emprunteur=emprunteur, disponible=False)
+        for emprunt in emprunt_en_cours:
+            if (now() - emprunt.dateEmprunt) > timedelta(days=7):
+                return render(request, 'items/emprunt/erreur.html', {'livre_id': livre_id})
+
+        # Verification nombre emprunt
+        if emprunteur.NombreEmprunt >= 3:
+            return render(request,'items/emprunt/erreur.html', {'livre_id':livre_id})
+        else:
+            if emprunt_livre.is_valid():
+                livre.disponible = False
+                livre.emprunteur = emprunteur
+                livre.dateEmprunt = datetime.datetime(2000, 5, 1)
+                livre.save()
+                emprunteur.NombreEmprunt += 1
+                emprunteur.save()
         return redirect('listes_media')
     else:
         empruntLivre = EmpruntLivre()
@@ -83,9 +99,13 @@ def empruntLivre(request, livre_id):
 def retourLivre(request, livre_id):
     livre = Livre.objects.get(id=livre_id)
     if livre.emprunteur:
-        livre.disponible = True
-        livre.emprunteur = None
-        livre.save()
+        emprunteur = livre.emprunteur
+        if emprunteur.NombreEmprunt > 0:
+            emprunteur.NombreEmprunt -= 1
+            emprunteur.save()
+            livre.disponible = True
+            livre.emprunteur = None
+            livre.save()
     return redirect('listes_media')
 
     # Emprunt Dvd
@@ -94,11 +114,23 @@ def empruntDvd(request, dvd_id):
         dvd = Dvd.objects.get(id=dvd_id)
         emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
         emprunt_dvd = EmpruntDvd(request.POST)
+
+        #Verification dates 
+        emprunt_en_cours = Livre.objects.filter(emprunteur=emprunteur, disponible=False)
+        for emprunt in emprunt_en_cours:
+            if (now() - emprunt.dateEmprunt) > timedelta(days=7):
+                return render(request, 'items/emprunt/erreur.html', {'dvd_id': dvd_id})
+
+        # Verification nombre emprunt
+        if emprunteur.NombreEmprunt >= 3:
+            return render(request,'items/emprunt/erreur.html', {'dvd_id':dvd_id})
         if emprunt_dvd.is_valid():
             dvd.disponible = False
             dvd.emprunteur = emprunteur
             dvd.dateEmprunt = timezone.now()
             dvd.save()
+            emprunteur.NombreEmprunt += 1
+            emprunteur.save()
         return redirect('listes_media')
     else:
         empruntDvd = EmpruntDvd()
@@ -108,9 +140,13 @@ def empruntDvd(request, dvd_id):
 def retourDvd(request, dvd_id):
     dvd = Dvd.objects.get(id=dvd_id)
     if dvd.emprunteur:
-        dvd.disponible = True
-        dvd.emprunteur = None
-        dvd.save()
+        emprunteur = dvd.emprunteur
+        if emprunteur.NombreEmprunt > 0:
+            emprunteur.NombreEmprunt -= 1
+            emprunteur.save()
+            dvd.disponible = True
+            dvd.emprunteur = None
+            dvd.save()
     dvds = Dvd.objects.all()
     return redirect('listes_media')
 
@@ -120,11 +156,22 @@ def empruntCd(request, cd_id):
         cd = Cd.objects.get(id=cd_id)
         emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
         emprunt_cd = EmpruntCd(request.POST)
+        emprunt_en_cours = Livre.objects.filter(emprunteur=emprunteur, disponible=False)
+
+        #Verification dates 
+        for emprunt in emprunt_en_cours:
+            if (now() - emprunt.dateEmprunt) > timedelta(days=7):
+                return render(request, 'items/emprunt/erreur.html', {'cd_id': cd_id})
+            
+        # Verification nombre emprunt
+        if emprunteur.NombreEmprunt >= 3:
+            return render(request,'items/emprunt/erreur.html', {'cd_id':cd_id})
         if emprunt_cd.is_valid():
             cd.disponible = False
             cd.emprunteur = emprunteur
             cd.dateEmprunt = timezone.now()
             cd.save()
+            emprunteur.NombreEmprunt += 1
         return redirect('listes_media')
     else:
         empruntCd = EmpruntCd()
@@ -134,9 +181,14 @@ def empruntCd(request, cd_id):
 def retourCd(request, cd_id):
     cd = Cd.objects.get(id=cd_id)
     if cd.emprunteur:
-        cd.disponible = True
-        cd.emprunteur = None
-        cd.save()
+        emprunteur = cd.emprunteur
+        if emprunteur.NombreEmprunt > 0:
+            emprunteur.NombreEmprunt -= 1
+            emprunteur.save()
+            cd.disponible = True
+            cd.emprunteur = None
+            cd.save()
+
     return redirect('listes_media')
 # liste des membres
 def listeemprunteur(request):

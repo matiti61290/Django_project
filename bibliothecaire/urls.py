@@ -12,5 +12,6 @@ urlpatterns = [
     path('listes/emprunt_dvd/<int:dvd_id>/', views.empruntDvd, name='emprunt_dvd'),
     path('retourdvd/<int:dvd_id>/', views.retourDvd, name='retour_dvd'),
     path('listes/emprunt_cd/<int:cd_id>/', views.empruntCd, name="emprunt_cd"),
-    path('retourcd/<int:cd_id>/', views.retourCd, name='retour_cd')
+    path('retourcd/<int:cd_id>/', views.retourCd, name='retour_cd'),
+    path('emprunt_livre/<int:livre_id>/erreur_emprunt/', views.empruntLivre, name='erreur_emprunt')
 ]
