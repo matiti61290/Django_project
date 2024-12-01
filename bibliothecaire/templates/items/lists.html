@@ -1,6 +1,7 @@
 <html>
     <a href="{% url 'ajout_media' %}">Ajouter un media</a>
     <a href="{% url 'listeEmprunteurs' %}">Voir les membres</a>
+    
     <h1>Liste des livres</h1>
     <ul>
         {% for livre in livres %}
@@ -13,6 +14,7 @@
                     Non disponible
                 {% endif %}
                 <p>Emprunteur: {{ livre.emprunteur }};</p>
+                <p>{{ livre.emprunteur.NombreEmprunt }}</p>
                 <p>Date d'emprunt: {{ livre.dateEmprunt|date:"d/m/Y" }}</p>
                 {% if livre.disponible %}
                     <a href="{% url 'emprunt_livre' livre.id %}" >Emprunter</a>
