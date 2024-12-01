@@ -29,7 +29,6 @@ def ajoutmedia(request):
                 livre.auteur = formLivre.cleaned_data['auteur']
                 livre.disponible = True
                 livre.save()
-                livres = Livre.objects.all()
                 return redirect('listes_media')
             
         elif "DVD_form" in request.POST:
@@ -40,7 +39,6 @@ def ajoutmedia(request):
                 dvd.realisateur = formDVD.cleaned_data['realisateur']
                 dvd.disponible = True
                 dvd.save()
-                dvds = Dvd.objects.all()
                 return redirect('listes_media')
             
         elif "CD_form" in request.POST:
@@ -51,7 +49,6 @@ def ajoutmedia(request):
                 cd.artiste = formCD.cleaned_data['artiste']
                 cd.disponible = True
                 cd.save()
-                cds = Cd.objects.all()
                 return redirect('listes_media')
             
         elif "JeuDePlateau_form" in request.POST:
@@ -61,7 +58,6 @@ def ajoutmedia(request):
                 jeuDePlateau.name = formJeuDePlateau.cleaned_data['name']
                 jeuDePlateau.createur = formJeuDePlateau.cleaned_data['createur']
                 jeuDePlateau.save()
-                jeuDePlateaux = JeuDePlateau.objects.all()
                 return redirect('listes_media')
             
     return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
@@ -78,7 +74,6 @@ def empruntLivre(request, livre_id):
             livre.emprunteur = emprunteur
             livre.dateEmprunt = timezone.now()
             livre.save()
-        livres = Livre.objects.all()
         return redirect('listes_media')
     else:
         empruntLivre = EmpruntLivre()
@@ -91,7 +86,6 @@ def retourLivre(request, livre_id):
         livre.disponible = True
         livre.emprunteur = None
         livre.save()
-    livres = Livre.objects.all()
     return redirect('listes_media')
 
     # Emprunt Dvd
@@ -105,7 +99,6 @@ def empruntDvd(request, dvd_id):
             dvd.emprunteur = emprunteur
             dvd.dateEmprunt = timezone.now()
             dvd.save()
-        dvds = Dvd.objects.all()
         return redirect('listes_media')
     else:
         empruntDvd = EmpruntDvd()
@@ -132,7 +125,6 @@ def empruntCd(request, cd_id):
             cd.emprunteur = emprunteur
             cd.dateEmprunt = timezone.now()
             cd.save()
-        cds = Cd.objects.all()
         return redirect('listes_media')
     else:
         empruntCd = EmpruntCd()
@@ -145,7 +137,6 @@ def retourCd(request, cd_id):
         cd.disponible = True
         cd.emprunteur = None
         cd.save()
-    cds = Cd.objects.all()
     return redirect('listes_media')
 # liste des membres
 def listeemprunteur(request):
@@ -162,7 +153,6 @@ def ajoutmembre(request):
             emprunteur.name = formMembre.cleaned_data['name']
             emprunteur.NombreEmprunt = 0
             emprunteur.save()
-            emprunteurs = Emprunteur.objects.all()
             return redirect('listeEmprunteurs')
     return render(request, "emprunteurs/ajout_emprunteur.html", {'formMembre': formMembre})
 
@@ -170,5 +160,4 @@ def ajoutmembre(request):
 def supprimer_membre(request, id):
     emprunteur = Emprunteur.objects.get(pk=id)
     emprunteur.delete()
-    emprunteurs = Emprunteur.objects.all()
     return redirect('listeEmprunteurs')
