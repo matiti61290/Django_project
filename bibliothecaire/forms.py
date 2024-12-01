@@ -26,3 +26,17 @@ class EmpruntLivre(forms.Form):
         queryset=Emprunteur.objects.all(),
         label="Sélectionnez un membre"
     )
+
+class EmpruntDvd(forms.Form):
+    disponible = forms.BooleanField(required=True)
+    emprunteur = forms.ModelChoiceField(
+        queryset=Emprunteur.objects.all(),
+        label="Sélectionnez un membre"
+    )
+
+class EmpruntCd(forms.Form):
+    disponible = forms.BooleanField(required=True)
+    emprunteur = forms.ModelChoiceField(
+        queryset=Emprunteur.objects.all(),
+        label="Sélectionnez un membre"
+    )

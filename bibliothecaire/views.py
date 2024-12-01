@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
-from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre
+from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre, EmpruntDvd, EmpruntCd
 from django.utils import timezone
 
 def listemedia(request):
@@ -71,7 +71,7 @@ def ajoutmedia(request):
     return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
 
 #Emprunt
-
+    # Emprunt Livre
 def empruntLivre(request, livre_id):
     if request.method == 'POST':
         livre = Livre.objects.get(id=livre_id)
@@ -87,7 +87,7 @@ def empruntLivre(request, livre_id):
                       {'livres': livres})
     else:
         empruntLivre = EmpruntLivre()
-        return render(request, 'items/emprunt.html',
+        return render(request, 'items/emprunt/emprunt_livre.html',
                       {'empruntlivre': empruntLivre})
 
 def retourLivre(request, livre_id):
@@ -100,6 +100,63 @@ def retourLivre(request, livre_id):
     return render(request, 'items/lists.html',
                   {'livres': livres})
 
+    # Emprunt Dvd
+def empruntDvd(request, dvd_id):
+    if request.method == 'POST':
+        dvd = Dvd.objects.get(id=dvd_id)
+        emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
+        emprunt_dvd = EmpruntDvd(request.POST)
+        if emprunt_dvd.is_valid():
+            dvd.disponible = False
+            dvd.emprunteur = emprunteur
+            dvd.dateEmprunt = timezone.now()
+            dvd.save()
+        dvds = Dvd.objects.all()
+        return render(request, 'items/lists.html',
+                      {'dvds': dvds})
+    else:
+        empruntDvd = EmpruntDvd()
+        return render(request, 'items/emprunt/emprunt_dvd.html',
+                      {'empruntdvd': empruntDvd})
+
+def retourDvd(request, dvd_id):
+    dvd = Dvd.objects.get(id=dvd_id)
+    if dvd.emprunteur:
+        dvd.disponible = True
+        dvd.emprunteur = None
+        dvd.save()
+    dvds = Dvd.objects.all()
+    return render(request, 'items/lists.html',
+                  {'dvds': dvds})
+
+    # emprunt CD
+def empruntCd(request, cd_id):
+    if request.method == 'POST':
+        cd = Cd.objects.get(id=cd_id)
+        emprunteur = Emprunteur.objects.get(id=request.POST['emprunteur'])
+        emprunt_cd = EmpruntCd(request.POST)
+        if emprunt_cd.is_valid():
+            cd.disponible = False
+            cd.emprunteur = emprunteur
+            cd.dateEmprunt = timezone.now()
+            cd.save()
+        cds = Cd.objects.all()
+        return render(request, 'items/lists.html',
+                      {'cds': cds})
+    else:
+        empruntCd = EmpruntCd()
+        return render(request, 'items/emprunt/emprunt_cd.html',
+                      {'empruntcd': empruntCd})
+
+def retourCd(request, cd_id):
+    cd = Cd.objects.get(id=cd_id)
+    if cd.emprunteur:
+        cd.disponible = True
+        cd.emprunteur = None
+        cd.save()
+    cds = Cd.objects.all()
+    return render(request, 'items/lists.html',
+                  {'cds': cds})
 # liste des membres
 def listeemprunteur(request):
     emprunteurs = Emprunteur.objects.all()

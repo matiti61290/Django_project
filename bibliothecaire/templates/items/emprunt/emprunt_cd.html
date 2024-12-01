@@ -1,0 +1,8 @@
+<html>
+    <h1>Emprunt CD</h1>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ empruntcd }}
+        <input type="submit" value="Envoyer" name="emprunt_cd">
+    </form>
+</html>
