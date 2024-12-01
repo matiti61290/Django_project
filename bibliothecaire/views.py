@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from bibliothecaire.models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
-from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationMembre, EmpruntLivre, EmpruntDvd, EmpruntCd
+from bibliothecaire.forms import CreationLivre, CreationCd, CreationDvd, CreationJeuDePlateau, CreationEmprunteur, EmpruntLivre, EmpruntDvd, EmpruntCd
 from django.utils import timezone
 
 def listemedia(request):
@@ -164,21 +164,21 @@ def listeemprunteur(request):
                   {'emprunteurs': emprunteurs})
 
 # Ajout membre
-def ajoutmembre(request):
-    formMembre = CreationMembre(request.POST)
+def ajoutemprunteur(request):
+    formEmprunteur = CreationEmprunteur(request.POST)
     if request.method == "POST":
-        if formMembre.is_valid():
+        if formEmprunteur.is_valid():
             emprunteur = Emprunteur()
-            emprunteur.name = formMembre.cleaned_data['name']
+            emprunteur.name = formEmprunteur.cleaned_data['name']
             emprunteur.NombreEmprunt = 0
             emprunteur.save()
             emprunteurs = Emprunteur.objects.all()
             return render(request, 'emprunteurs/list.html',
                           {'emprunteurs':emprunteurs})
-    return render(request, "emprunteurs/ajout_emprunteur.html", {'formMembre': formMembre})
+    return render(request, "emprunteurs/ajout_emprunteur.html", {'formEmprunteur': formEmprunteur})
 
 # Suppression membre
-def supprimer_membre(request, id):
+def supprimeremprunteur(request, id):
     emprunteur = Emprunteur.objects.get(pk=id)
     emprunteur.delete()
     emprunteurs = Emprunteur.objects.all()

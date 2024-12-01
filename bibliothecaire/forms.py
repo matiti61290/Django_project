@@ -17,7 +17,7 @@ class CreationJeuDePlateau(forms.Form):
     name = forms.CharField(required=True)
     createur = forms.CharField(required=True)
 
-class CreationMembre(forms.Form):
+class CreationEmprunteur(forms.Form):
     name = forms.CharField(required=True)
 
 class EmpruntLivre(forms.Form):
