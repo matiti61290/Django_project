@@ -30,8 +30,7 @@ def ajoutmedia(request):
                 livre.disponible = True
                 livre.save()
                 livres = Livre.objects.all()
-                return render(request, 'items/lists.html',
-                                {'livres': livres})
+                return redirect('listes_media')
             
         elif "DVD_form" in request.POST:
             formDVD = CreationDvd(request.POST)
@@ -42,8 +41,7 @@ def ajoutmedia(request):
                 dvd.disponible = True
                 dvd.save()
                 dvds = Dvd.objects.all()
-                return render(request, 'items/lists.html',
-                                {'dvds': dvds})
+                return redirect('listes_media')
             
         elif "CD_form" in request.POST:
             formCD = CreationCd(request.POST)
@@ -54,8 +52,7 @@ def ajoutmedia(request):
                 cd.disponible = True
                 cd.save()
                 cds = Cd.objects.all()
-                return render(request, 'items/lists.html',
-                              {'cds': cds})
+                return redirect('listes_media')
             
         elif "JeuDePlateau_form" in request.POST:
             formJeuDePlateau = CreationJeuDePlateau(request.POST)
@@ -65,8 +62,7 @@ def ajoutmedia(request):
                 jeuDePlateau.createur = formJeuDePlateau.cleaned_data['createur']
                 jeuDePlateau.save()
                 jeuDePlateaux = JeuDePlateau.objects.all()
-                return render(request, 'items/lists.html',
-                              {'jeuDePlateaux': jeuDePlateaux})
+                return redirect('listes_media')
             
     return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
 
@@ -83,8 +79,7 @@ def empruntLivre(request, livre_id):
             livre.dateEmprunt = timezone.now()
             livre.save()
         livres = Livre.objects.all()
-        return render(request, 'items/lists.html',
-                      {'livres': livres})
+        return redirect('listes_media')
     else:
         empruntLivre = EmpruntLivre()
         return render(request, 'items/emprunt/emprunt_livre.html',
@@ -97,8 +92,7 @@ def retourLivre(request, livre_id):
         livre.emprunteur = None
         livre.save()
     livres = Livre.objects.all()
-    return render(request, 'items/lists.html',
-                  {'livres': livres})
+    return redirect('listes_media')
 
     # Emprunt Dvd
 def empruntDvd(request, dvd_id):
@@ -112,8 +106,7 @@ def empruntDvd(request, dvd_id):
             dvd.dateEmprunt = timezone.now()
             dvd.save()
         dvds = Dvd.objects.all()
-        return render(request, 'items/lists.html',
-                      {'dvds': dvds})
+        return redirect('listes_media')
     else:
         empruntDvd = EmpruntDvd()
         return render(request, 'items/emprunt/emprunt_dvd.html',
@@ -126,8 +119,7 @@ def retourDvd(request, dvd_id):
         dvd.emprunteur = None
         dvd.save()
     dvds = Dvd.objects.all()
-    return render(request, 'items/lists.html',
-                  {'dvds': dvds})
+    return redirect('listes_media')
 
     # emprunt CD
 def empruntCd(request, cd_id):
@@ -141,8 +133,7 @@ def empruntCd(request, cd_id):
             cd.dateEmprunt = timezone.now()
             cd.save()
         cds = Cd.objects.all()
-        return render(request, 'items/lists.html',
-                      {'cds': cds})
+        return redirect('listes_media')
     else:
         empruntCd = EmpruntCd()
         return render(request, 'items/emprunt/emprunt_cd.html',
@@ -155,8 +146,7 @@ def retourCd(request, cd_id):
         cd.emprunteur = None
         cd.save()
     cds = Cd.objects.all()
-    return render(request, 'items/lists.html',
-                  {'cds': cds})
+    return redirect('listes_media')
 # liste des membres
 def listeemprunteur(request):
     emprunteurs = Emprunteur.objects.all()
@@ -173,8 +163,7 @@ def ajoutmembre(request):
             emprunteur.NombreEmprunt = 0
             emprunteur.save()
             emprunteurs = Emprunteur.objects.all()
-            return render(request, 'emprunteurs/list.html',
-                          {'emprunteurs':emprunteurs})
+            return redirect('listeEmprunteurs')
     return render(request, "emprunteurs/ajout_emprunteur.html", {'formMembre': formMembre})
 
 # Suppression membre
@@ -182,5 +171,4 @@ def supprimer_membre(request, id):
     emprunteur = Emprunteur.objects.get(pk=id)
     emprunteur.delete()
     emprunteurs = Emprunteur.objects.all()
-    return render(request, 'emprunteurs/list.html',
-                  {'emprunteurs': emprunteurs})
+    return redirect('listeEmprunteurs')
