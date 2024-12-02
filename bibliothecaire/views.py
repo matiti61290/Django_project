@@ -92,9 +92,9 @@ def empruntLivre(request, livre_id):
                 emprunteur.save()
         return redirect('listes_media')
     else:
-        empruntLivre = EmpruntLivre()
+        emprunt_livre = EmpruntLivre()
         return render(request, 'items/emprunt/emprunt_livre.html',
-                      {'empruntlivre': empruntLivre})
+                      {'emprunt_livre': emprunt_livre})
 
 def retourLivre(request, livre_id):
     livre = Livre.objects.get(id=livre_id)
@@ -133,9 +133,9 @@ def empruntDvd(request, dvd_id):
             emprunteur.save()
         return redirect('listes_media')
     else:
-        empruntDvd = EmpruntDvd()
+        emprunt_DVD = EmpruntDvd()
         return render(request, 'items/emprunt/emprunt_dvd.html',
-                      {'empruntdvd': empruntDvd})
+                      {'emprunt_dvd': emprunt_DVD})
 
 def retourDvd(request, dvd_id):
     dvd = Dvd.objects.get(id=dvd_id)
@@ -147,7 +147,6 @@ def retourDvd(request, dvd_id):
             dvd.disponible = True
             dvd.emprunteur = None
             dvd.save()
-    dvds = Dvd.objects.all()
     return redirect('listes_media')
 
     # emprunt CD
@@ -175,9 +174,9 @@ def empruntCd(request, cd_id):
             emprunteur.save()
         return redirect('listes_media')
     else:
-        empruntCd = EmpruntCd()
+        emprunt_CD = EmpruntCd()
         return render(request, 'items/emprunt/emprunt_cd.html',
-                      {'empruntcd': empruntCd})
+                      {'emprunt_cd': emprunt_CD})
 
 def retourCd(request, cd_id):
     cd = Cd.objects.get(id=cd_id)
