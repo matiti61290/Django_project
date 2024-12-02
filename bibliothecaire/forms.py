@@ -19,6 +19,8 @@ class CreationJeuDePlateau(forms.Form):
 
 class CreationMembre(forms.Form):
     name = forms.CharField(required=True, label='Nom du membre')
+    surname = forms.CharField(required=True, label='Prénom')
+
 
 class EmpruntLivre(forms.Form):
     disponible = forms.BooleanField(required=True)
