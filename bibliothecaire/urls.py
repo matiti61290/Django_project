@@ -3,7 +3,7 @@ from bibliothecaire import views
 
 urlpatterns = [
     path('listes/', views.listemedia, name='listes_media'),
-    path('emprunteurs/', views.listeemprunteur, name='listeEmprunteurs'),
+    path('emprunteurs/', views.listeemprunteur, name='liste_emprunteurs'),
     path('ajoutmedia/', views.ajoutmedia, name='ajout_media'),
     path('ajoutmembre/', views.ajoutmembre, name='ajout_membre'),
     path('supprimer_membre/<int:id>/', views.supprimer_membre, name='supprimer_membre'),

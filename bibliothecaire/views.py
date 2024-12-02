@@ -18,52 +18,52 @@ def listemedia(request):
 
 # Ajout media
 def ajoutmedia(request):
-    formLivre = CreationLivre()
-    formDVD = CreationDvd()
-    formCD = CreationCd()
-    formJeuDePlateau = CreationJeuDePlateau()
+    form_livre = CreationLivre()
+    form_DVD = CreationDvd()
+    form_CD = CreationCd()
+    form_jeu_de_plateau = CreationJeuDePlateau()
 
     if request.method == "POST":
         if  "Livre_form" in request.POST:
-            formLivre = CreationLivre(request.POST)
-            if formLivre.is_valid():
+            form_livre = CreationLivre(request.POST)
+            if form_livre.is_valid():
                 livre = Livre()
-                livre.name = formLivre.cleaned_data['nameLivre']
-                livre.auteur = formLivre.cleaned_data['auteur']
+                livre.name = form_livre.cleaned_data['nameLivre']
+                livre.auteur = form_livre.cleaned_data['auteur']
                 livre.disponible = True
                 livre.save()
                 return redirect('listes_media')
             
         elif "DVD_form" in request.POST:
-            formDVD = CreationDvd(request.POST)
-            if formDVD.is_valid():
+            form_DVD = CreationDvd(request.POST)
+            if form_DVD.is_valid():
                 dvd = Dvd()
-                dvd.name = formDVD.cleaned_data['nameDVD']
-                dvd.realisateur = formDVD.cleaned_data['realisateur']
+                dvd.name = form_DVD.cleaned_data['nameDVD']
+                dvd.realisateur = form_DVD.cleaned_data['realisateur']
                 dvd.disponible = True
                 dvd.save()
                 return redirect('listes_media')
             
         elif "CD_form" in request.POST:
-            formCD = CreationCd(request.POST)
-            if formCD.is_valid():
+            form_CD = CreationCd(request.POST)
+            if form_CD.is_valid():
                 cd = Cd()
-                cd.name = formCD.cleaned_data['nameCD']
-                cd.artiste = formCD.cleaned_data['artiste']
+                cd.name = form_CD.cleaned_data['nameCD']
+                cd.artiste = form_CD.cleaned_data['artiste']
                 cd.disponible = True
                 cd.save()
                 return redirect('listes_media')
             
         elif "JeuDePlateau_form" in request.POST:
-            formJeuDePlateau = CreationJeuDePlateau(request.POST)
-            if formJeuDePlateau.is_valid():
-                jeuDePlateau = JeuDePlateau()
-                jeuDePlateau.name = formJeuDePlateau.cleaned_data['name']
-                jeuDePlateau.createur = formJeuDePlateau.cleaned_data['createur']
-                jeuDePlateau.save()
+            form_jeu_de_plateau = CreationJeuDePlateau(request.POST)
+            if form_jeu_de_plateau.is_valid():
+                jeu_de_plateau = JeuDePlateau()
+                jeu_de_plateau.name = form_jeu_de_plateau.cleaned_data['name']
+                jeu_de_plateau.createur = form_jeu_de_plateau.cleaned_data['createur']
+                jeu_de_plateau.save()
                 return redirect('listes_media')
             
-    return render(request, "items/ajout_media.html", {'formLivre': formLivre, 'formDvd': formDVD, 'formCD': formCD, 'formJeuDePlateau': formJeuDePlateau})
+    return render(request, "items/ajout_media.html", {'form_livre': form_livre, 'form_DVD': form_DVD, 'form_CD': form_CD, 'form_jeu_de_plateau': form_jeu_de_plateau})
 
 #Emprunt
     # Emprunt Livre
@@ -213,4 +213,4 @@ def ajoutmembre(request):
 def supprimer_membre(request, id):
     emprunteur = Emprunteur.objects.get(pk=id)
     emprunteur.delete()
-    return redirect('listeEmprunteurs')
+    return redirect('liste_emprunteurs')

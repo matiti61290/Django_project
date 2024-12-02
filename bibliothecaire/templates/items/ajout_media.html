@@ -2,28 +2,28 @@
     <h1>Ajouter un livre</h1>
     <form action="" method="post" novalidate>
         {% csrf_token %}
-        {{ formLivre }}
+        {{ form_livre }}
         <input type="submit" value="Envoyer" name="Livre_form">
     </form>
 
     <h1>Ajouter un DVD</h1>
     <form action="" method="post" novalidate>
         {% csrf_token %}
-        {{ formDvd }}
+        {{ form_DVD }}
         <input type="submit" value="Envoyer" name="DVD_form">
     </form>
 
     <h1>Ajouter un CD</h1>
     <form action="" method="post" novalidate>
         {% csrf_token %}
-        {{ formCD }}
+        {{ form_CD }}
         <input type="submit" value="Envoyer" name="CD_form">
     </form>
 
     <h1>Ajouter un jeu de plateau</h1>
     <form action="" method="post" novalidate>
         {% csrf_token %}
-        {{ formJeuDePlateau }}
+        {{ form_jeu_de_plateau }}
         <input type="submit" value="Envoyer" name="JeuDePlateau_form">
     </form>
 </html>
