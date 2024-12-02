@@ -198,15 +198,15 @@ def listeemprunteur(request):
 
 # Ajout membre
 def ajoutmembre(request):
-    formMembre = CreationMembre(request.POST)
+    form_membre = CreationMembre(request.POST)
     if request.method == "POST":
-        if formMembre.is_valid():
+        if form_membre.is_valid():
             emprunteur = Emprunteur()
-            emprunteur.name = formMembre.cleaned_data['name']
+            emprunteur.name = form_membre.cleaned_data['name']
             emprunteur.NombreEmprunt = 0
             emprunteur.save()
-            return redirect('listeEmprunteurs')
-    return render(request, "emprunteurs/ajout_emprunteur.html", {'formMembre': formMembre})
+            return redirect('liste_emprunteurs')
+    return render(request, "emprunteurs/ajout_emprunteur.html", {'form_membre': form_membre})
 
 # Suppression membre
 def supprimer_membre(request, id):
