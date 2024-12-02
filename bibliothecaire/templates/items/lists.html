@@ -1,5 +1,5 @@
 <html>
-    <a href="{% url 'ajout_media' %}">Ajouter un media</a>
+    <a href="{% url 'ajout_media' %}">Ajouter un média</a>
     <a href="{% url 'liste_emprunteurs' %}">Voir les membres</a>
     
     <h1>Liste des livres</h1>
@@ -8,13 +8,16 @@
             <li>
                 <p>Titre :{{ livre.name }}; </p>
                 <p>Auteur : {{ livre.auteur }};</p>
-                {% if livre.disponible %}
-                    Disponible
-                {% else %}
-                    Non disponible
-                {% endif %}
-                <p>Emprunteur: {{ livre.emprunteur }};</p>
-                <p>{{ livre.emprunteur.NombreEmprunt }}</p>
+                <p>
+                    {% if livre.disponible %}
+                        Disponible
+                    {% else %}
+                        Non disponible
+                    {% endif %}
+                    {% if livre.emprunteur %}
+                        <p>Emprunteur: {{ livre.emprunteur }};</p>
+                    {% endif %}
+                </p>
                 <p>Date d'emprunt: {{ livre.dateEmprunt|date:"d/m/Y" }}</p>
                 {% if livre.disponible %}
                     <a href="{% url 'emprunt_livre' livre.id %}" >Emprunter</a>
@@ -30,13 +33,15 @@
         {% for dvd in dvds %}
         <li>
             <p>Titre :{{ dvd.name }}; </p>
-            <p>Auteur : {{ dvd.realisateur }};</p>
+            <p>Réalisateur : {{ dvd.realisateur }};</p>
             {% if dvd.disponible %}
                 Disponible
             {% else %}
                 Non disponible
             {% endif %}
-            <p>Emprunteur: {{ dvd.emprunteur }};</p>
+            {% if livre.emprunteur %}
+                <p>Emprunteur: {{ livre.emprunteur }};</p>
+            {% endif %}
             <p>Date d'emprunt: {{ dvd.dateEmprunt|date:"d/m/Y" }}</p>
             {% if dvd.disponible %}
                 <a href="{% url 'emprunt_dvd' dvd.id %}" >Emprunter</a>
@@ -52,13 +57,15 @@
         {% for cd in cds %}
         <li>
             <p>Titre :{{ cd.name }}; </p>
-            <p>Auteur : {{ cd.artiste }};</p>
+            <p>artiste : {{ cd.artiste }};</p>
             {% if cd.disponible %}
                 Disponible
             {% else %}
                 Non disponible
             {% endif %}
-            <p>Emprunteur: {{ cd.emprunteur }};</p>
+            {% if livre.emprunteur %}
+                <p>Emprunteur: {{ livre.emprunteur }};</p>
+            {% endif %}
             <p>Date d'emprunt: {{ cd.dateEmprunt|date:"d/m/Y" }}</p>
             {% if cd.disponible %}
                 <a href="{% url 'emprunt_cd' cd.id %}" >Emprunter</a>
@@ -74,7 +81,7 @@
         {% for jeu in jeux %}
             <li>
                 <p>Titre : {{ jeu.name }}</p>
-                <p>Createur : {{ jeu.createur }}</p>
+                <p>Créateur : {{ jeu.createur }}</p>
             </li>
         {% endfor %}
     </ul>

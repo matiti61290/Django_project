@@ -1,11 +1,13 @@
 <html>
     <a href="{% url 'ajout_membre' %}">Ajouter un membre</a>
-    <a href="{% url 'listes_media' %}">Retour a la liste des medias</a>
-    <h1>Liste des emprunteurs</h1>
+    <a href="{% url 'listes_media' %}">Retour à la liste des médias</a>
+    <h1>Liste des membres</h1>
     <ul>
         <ul>
             {% for emprunteur in emprunteurs %}
-            <li>Nom: {{ emprunteur.name }} Nombre d'emprunt: {{ emprunteur.NombreEmprunt }}
+            <li>
+                <p>Nom: {{ emprunteur.name }}</p>
+                <p>Nombre d'emprunt: {{ emprunteur.NombreEmprunt }}</p> 
                 <form action="{% url 'supprimer_membre' emprunteur.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit" style="color: red;">Supprimer</button>
