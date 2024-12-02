@@ -201,8 +201,10 @@ def ajoutmembre(request):
     form_membre = CreationMembre(request.POST)
     if request.method == "POST":
         if form_membre.is_valid():
+            emprunteur_name = form_membre.cleaned_data['name']
+            emprunteur_surname =form_membre.cleaned_data['surname']
             emprunteur = Emprunteur()
-            emprunteur.name = form_membre.cleaned_data['name']
+            emprunteur.name = emprunteur_name + ' ' + emprunteur_surname
             emprunteur.NombreEmprunt = 0
             emprunteur.save()
             return redirect('liste_emprunteurs')
