@@ -3,7 +3,6 @@ from django.db import models
 class Emprunteur(models.Model):
     name = models.fields.CharField(max_length=150)
     NombreEmprunt = models.fields.IntegerField()
-    EmpruntPossible = models.fields.BooleanField(blank=True, null=True)
 
     def __str__(self):
         return self.name
