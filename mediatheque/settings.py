@@ -165,3 +165,5 @@ logging.config.dictConfig({
         'django.server': DEFAULT_LOGGING['loggers']['django.server'],
     },
 })
+
+TEST_RUNNER = 'pytest_django.runner.PytestTestRunner'
